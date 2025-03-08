@@ -39,9 +39,9 @@ Handles **SQLite database operations** for profile management and event logging.
 ---
 
 ## 🎨 UI Screenshots  
-| Main Activity | Settings Activity | Data Activity |
+| Main Activity | Profile Create Activity | Profile  Activity |
 |--------------|----------------|--------------|
-| ![Main Screen](screenshots/main_activity.png) | ![Settings](screenshots/profile_activity.png) | ![Data Screen](screenshots/profile_create.png) |
+| ![Main Screen](app/screenshots/main_activity.png) | ![Settings](app/screenshots/profile_create.png) | ![Data Screen](app/screenshots/profile_activity.png) |
 
 ---
 
