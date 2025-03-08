@@ -6,7 +6,7 @@ public class Profile {
     private String surname;
     private float gpa;
 
-    // ✅ Constructor
+    // Constructor
     public Profile(int id, String name, String surname, float gpa) {
         this.id = id;
         this.name = name;
@@ -14,7 +14,7 @@ public class Profile {
         this.gpa = gpa;
     }
 
-    // ✅ Getters
+    // Getters
     public int getId() {
         return id;
     }
@@ -31,7 +31,7 @@ public class Profile {
         return gpa;
     }
 
-    // ✅ Setters
+    // Setters
     public void setId(int id) {
         this.id = id;
     }

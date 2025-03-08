@@ -1,3 +1,6 @@
+//Joyal Biju Kulangara - 40237314
+// COEN 390 - Programming Assignment #2
+
 package com.example.techassignment_2;
 
 import android.content.Intent;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class MainActivity extends AppCompatActivity implements InsertProfileDialogFragment.InsertProfileListener { // ✅ Implemented listener
+public class MainActivity extends AppCompatActivity implements InsertProfileDialogFragment.InsertProfileListener {
 
     private DatabaseHelper dbHelper;
     private ListView profileListView;
@@ -31,35 +34,37 @@ public class MainActivity extends AppCompatActivity implements InsertProfileDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ✅ Initialize UI
+        // Toolbar Setup
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Initialized UI Elements
         profileListView = findViewById(R.id.profileListView);
         profileCountText = findViewById(R.id.profileCountText);
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        // ✅ Initialize DatabaseHelper
+        // Initialized Database Helper
         dbHelper = new DatabaseHelper(this);
 
-        // ✅ Load profiles from database
+        // Load profiles from database
         loadProfiles();
 
-        // ✅ Handle profile click -> Open ProfileActivity
+        // Profile click -> Opens ProfileActivity
         profileListView.setOnItemClickListener((parent, view, position, id) -> {
             Profile selectedProfile = profileList.get(position);
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             intent.putExtra("PROFILE_ID", selectedProfile.getId());
-            startActivityForResult(intent, 1); // ✅ Request code 1 for profile activity
+            startActivityForResult(intent, 1); // Request code 1 for profile activity
         });
 
-        // ✅ Handle FAB click -> Open InsertProfileDialogFragment
+        // Floating action button opens the insert profile dialog
         fab.setOnClickListener(v -> {
             InsertProfileDialogFragment dialog = new InsertProfileDialogFragment();
             dialog.show(getSupportFragmentManager(), "InsertProfileDialogFragment");
         });
     }
 
-    // ✅ Load profiles from database
+    // Load profiles from database and sort based on current mode (name or ID)
     private void loadProfiles() {
         profileList = dbHelper.getAllProfiles(sortByName);
 
@@ -69,17 +74,18 @@ public class MainActivity extends AppCompatActivity implements InsertProfileDial
             return;
         }
 
-        // ✅ Sort based on current mode
+        // Sort based on current mode (Name or ID)
         if (sortByName) {
             Collections.sort(profileList, Comparator.comparing(Profile::getSurname));
         } else {
             Collections.sort(profileList, Comparator.comparingInt(Profile::getId));
         }
 
-        // ✅ Update UI
+        // Update UI with sorted list
         updateListView();
     }
 
+    // Refreshes the list
     private void updateListView() {
         ArrayList<String> displayList = new ArrayList<>();
         for (int i = 0; i < profileList.size(); i++) {
@@ -95,26 +101,26 @@ public class MainActivity extends AppCompatActivity implements InsertProfileDial
         profileCountText.setText(profileList.size() + " Profiles, " + (sortByName ? "By Surname" : "By ID"));
     }
 
-    // ✅ Callback for Profile Inserted (Prevents Crash!)
+    // Callback for Profile Inserted (Prevents Crashing!)
     @Override
     public void onProfileInserted() {
         loadProfiles(); // Refresh the list after inserting a new profile
         Toast.makeText(this, "Profile Added Successfully!", Toast.LENGTH_SHORT).show();
     }
 
-    // ✅ Refresh the list when returning from ProfileActivity (after deleting a profile)
+    // Refresh the list when returning from ProfileActivity (after deleting a profile)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
             if (data != null && data.getBooleanExtra("PROFILE_DELETED", false)) {
-                loadProfiles();  // ✅ Refresh the list immediately after deletion
+                loadProfiles();  // Refresh the list immediately after deletion
             }
         }
     }
 
-    // ✅ Handle toolbar menu clicks
+    // Handle toolbar menu clicks
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -124,9 +130,12 @@ public class MainActivity extends AppCompatActivity implements InsertProfileDial
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_toggle_sort) {
-            // Toggle sorting mode
             sortByName = !sortByName;
-            item.setTitle(sortByName ? "Sort by ID" : "Sort by Name");
+
+            // Toggle emoji and text dynamically
+            String newTitle = sortByName ? "📝 Sort by ID" : "📌 Sort by Name";
+            item.setTitle(newTitle);
+
             loadProfiles();
             return true;
         }

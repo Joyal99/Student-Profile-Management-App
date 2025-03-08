@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <!-- ✅ Toolbar with Back Button -->
+    <!-- Toolbar with Back Button -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- ✅ User Profile Header -->
+    <!-- User Profile Header -->
     <TextView
         android:id="@+id/userProfileHeader"
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-    <!-- ✅ Profile Details Section -->
+    <!-- Profile Details Section -->
     <TextView
         android:id="@+id/surnameTextView"
         android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/idTextView"/>
 
-    <!-- ✅ Profile Created Timestamp -->
+    <!-- Profile Created Timestamp -->
     <TextView
         android:id="@+id/profileCreatedTextView"
         android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gpaTextView"/>
 
-    <!-- ✅ Access History ListView -->
+    <!-- Access History ListView -->
     <TextView
         android:id="@+id/accessHistoryHeader"
         android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/deleteButton"/>
 
-    <!-- ✅ Delete Button -->
+    <!-- Delete Button -->
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"

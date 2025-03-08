@@ -17,29 +17,29 @@ import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView nameTextView, surnameTextView, idTextView, gpaTextView, profileCreatedTextView; // ✅ Added profileCreatedTextView
+    private TextView nameTextView, surnameTextView, idTextView, gpaTextView, profileCreatedTextView;
     private ListView accessListView;
     private Button deleteButton;
     private DatabaseHelper dbHelper;
     private int profileId;
-    private boolean isDeleting = false; // ✅ Prevents logging "Closed" when deleting
+    private boolean isDeleting = false; // Prevents logging "Closed" when deleting a user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // ✅ Initialize UI Elements
+        // Initialize UI Elements
         nameTextView = findViewById(R.id.nameTextView);
         surnameTextView = findViewById(R.id.surnameTextView);
         idTextView = findViewById(R.id.idTextView);
         gpaTextView = findViewById(R.id.gpaTextView);
-        profileCreatedTextView = findViewById(R.id.profileCreatedTextView); // ✅ Fix: Initialize profileCreatedTextView
+        profileCreatedTextView = findViewById(R.id.profileCreatedTextView);
         accessListView = findViewById(R.id.accessListView);
         deleteButton = findViewById(R.id.deleteButton);
         dbHelper = new DatabaseHelper(this);
 
-        // ✅ Set up Toolbar with Back Button
+        // Set up Toolbar with Back Button
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Profile Activity");
         }
 
-        // ✅ Get Profile ID from Intent
+        // Get Profile ID from Intent
         profileId = getIntent().getIntExtra("PROFILE_ID", -1);
         if (profileId == -1) {
             Toast.makeText(this, "Error loading profile", Toast.LENGTH_SHORT).show();
@@ -55,18 +55,18 @@ public class ProfileActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ Load Profile Data & Access History
+        // Load Profile Data & Access History
         loadProfileData();
         loadAccessHistory();
 
-        // ✅ Log Profile Open Event
+        // Log Profile Open Event
         logAccessEvent("Opened");
 
-        // ✅ Handle Delete Button
+        // Handle Delete Button
         deleteButton.setOnClickListener(v -> deleteProfile());
     }
 
-    // ✅ Handle Back Arrow Click
+    // Handle Back Arrow Click
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
             idTextView.setText("ID: " + profile.getId());
             gpaTextView.setText("GPA: " + profile.getGpa());
 
-            // ✅ Get the profile creation timestamp from the database
+            // Get the profile creation timestamp from the database
             String createdTimestamp = dbHelper.getProfileCreatedTimestamp(profileId);
             profileCreatedTextView.setText("Profile created: " + createdTimestamp);
         }
@@ -98,17 +98,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void logAccessEvent(String eventType) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd @ HH:mm:ss", Locale.getDefault()).format(new Date());
-        dbHelper.addAccessEntry(profileId, eventType); // ✅ Timestamp should already have "@"
+        dbHelper.addAccessEntry(profileId, eventType);
     }
 
     private void deleteProfile() {
-        isDeleting = true; // ✅ Prevents logging "Closed" when deleting
+        isDeleting = true; // Prevents logging "Closed" when deleting
 
         logAccessEvent("Profile Deleted");
         dbHelper.deleteProfile(profileId);
         Toast.makeText(this, "Profile Deleted", Toast.LENGTH_SHORT).show();
 
-        // ✅ Send result back to MainActivity to refresh list
+        // Send result back to MainActivity to refresh list
         Intent resultIntent = new Intent();
         resultIntent.putExtra("PROFILE_DELETED", true);
         setResult(RESULT_OK, resultIntent);
@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!isDeleting) { // ✅ Only log "Closed" if NOT deleting
+        if (!isDeleting) { // Only log "Closed" if NOT deleting
             logAccessEvent("Closed");
         }
     }

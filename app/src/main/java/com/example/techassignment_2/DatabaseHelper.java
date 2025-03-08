@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // ✅ Insert New Profile
+    // Insert New Profile
     public boolean addProfile(Profile profile) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    // ✅ Get Profile by ID
+    // Get Profile by ID
     public Profile getProfile(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Profile profile = null;
@@ -107,12 +107,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return profile;
     }
 
-    // ✅ Get All Profiles (Handles Sorting)
+    // Get All Profiles (Handles Sorting)
     public ArrayList<Profile> getAllProfiles(boolean sortByName) {
         return sortByName ? getAllProfilesByName() : getAllProfilesById();
     }
 
-    // ✅ Get All Profiles (Ordered by Name)
+    // Get All Profiles (Ordered by Name)
     public ArrayList<Profile> getAllProfilesByName() {
         ArrayList<Profile> profiles = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return profiles;
     }
 
-    // ✅ Get All Profiles (Ordered by ID)
+    // Get All Profiles (Ordered by ID)
     public ArrayList<Profile> getAllProfilesById() {
         ArrayList<Profile> profiles = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -154,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return profiles;
     }
 
-    // ✅ Check if ID already exists
+    // Check if ID already exists
     public boolean isIdExists(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT 1 FROM " + TABLE_PROFILE + " WHERE " + COLUMN_ID + " = ?",
@@ -165,21 +165,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    // ✅ Delete Profile and its Access History
+    // Delete Profile and its Access History
     public void deleteProfile(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // ✅ First, delete all access history for the profile
+        // Delete all access history for the profile
         db.delete(TABLE_ACCESS, COLUMN_PROFILE_ID + "=?", new String[]{String.valueOf(id)});
 
-        // ✅ Then, delete the profile itself
+        // Delete the profile itself
         db.delete(TABLE_PROFILE, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
 
         db.close();
     }
 
 
-    // ✅ Add Access Entry
+    // Add Access Entry
     public void addAccessEntry(int profileId, String accessType) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -207,7 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // ✅ Get Access History for a Profile
+    // Get Access History for a Profile
     public ArrayList<String> getAccessHistory(int profileId) {
         ArrayList<String> accessHistory = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -220,14 +220,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 String eventType = cursor.getString(0);
                 String timestamp = cursor.getString(1);
-                accessHistory.add(timestamp + " " + eventType); // Keep timestamp as-is
+
+                // Emojis based on event type
+                String emoji;
+                switch (eventType) {
+                    case "Created":
+                        emoji = "🏁";
+                        break;
+                    case "Opened":
+                        emoji = "🟢";
+                        break;
+                    case "Closed":
+                        emoji = "🔴";
+                        break;
+                    case "Profile Deleted":
+                        emoji = "❌";
+                        break;
+                    default:
+                        emoji = "ℹ️";
+                        break;
+                }
+
+                accessHistory.add(emoji + " " + timestamp + " " + eventType);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return accessHistory;
     }
-
-
 
 }
 
