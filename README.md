@@ -1,9 +1,7 @@
-# Student Profile Management App (Student History App) 🚀  
+# Student Profile Management App 🚀  
 
 ## 📌 Overview  
-This is an **Android application** that allows users to track events using counters. Users can customize event names, set a maximum count limit, and view event history in a scrollable list. The app follows the **Model-View-Controller (MVC) architecture** and stores data persistently using **SharedPreferences**.
-
----
+This is an **Android application** that allows users to create, view, and manage student profiles. Each profile contains a **name, surname, ID, and GPA**, and the app maintains an access history tracking when a profile is **created, opened, closed, or deleted.** The app follows the Model-View-Controller (MVC) architecture and utilizes **SQLite** for persistent storage.
 
 ## 🏗️ Features  
 ✅ **Create Student Profiles** – Add a name, surname, ID (8 digits), and GPA (0-4.3).
