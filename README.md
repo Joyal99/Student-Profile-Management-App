@@ -63,22 +63,22 @@ Click ▶️ Run to launch the app on an emulator or a real android device.
 
 ## 🎯 Usage Guide
 **📌 Main Screen**
-View all profiles sorted by Name 📝 or ID 📌.
-Click on a profile to open its details.
-Tap the ➕ button to insert a new profile.
-Use the three-dot menu to switch sorting modes.
+- View all profiles sorted by Name 📝 or ID 📌.
+- Click on a profile to open its details.
+- Tap the ➕ button to insert a new profile.
+- Use the three-dot menu to switch sorting modes.
 
 **📌 Profile Details Screen**
-Displays Name, Surname, ID, GPA.
-Shows Profile Created Timestamp 📅.
-Lists Access History with timestamps & emoji indicators.
-Delete Profile with a single click.
+- Displays Name, Surname, ID, GPA.
+- Shows Profile Created Timestamp 📅.
+- Lists Access History with timestamps & emoji indicators.
+- Delete Profile with a single click.
 
 **📌 Insert Profile Dialog**
-Enter Name, Surname, ID, and GPA.
-ID must be 8 digits (10000000 - 99999999).
-GPA must be between 0 and 4.3.
-Save Profile or Cancel.
+- Enter Name, Surname, ID, and GPA.
+- ID must be 8 digits (10000000 - 99999999).
+- GPA must be between 0 and 4.3.
+- Save Profile or Cancel.
 
 ## 🛠️ Technologies Used
 - **Java** – Primary language for Android development.
